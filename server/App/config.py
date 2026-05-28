@@ -1,4 +1,3 @@
-import os
 from typing import Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -59,7 +58,7 @@ class Settings(BaseSettings):
         return f"http://{self.QDRANT_HOST}:{self.QDRANT_PORT}"
 
     model_config = SettingsConfigDict(
-        env_file=".env.development" if os.getenv("APP_ENV") != "production" else ".env",
+        env_file=".env",
         env_file_encoding="utf-8",
         extra="ignore",
     )
