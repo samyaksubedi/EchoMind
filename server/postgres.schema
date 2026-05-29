@@ -1,0 +1,45 @@
+User
+─────────────────
+id
+name
+email
+passwordHash
+isVerified
+emailVerificationToken
+emailVerificationTokenExpires
+resetPasswordToken
+resetPasswordTokenExpires
+createdAt
+updatedAt
+
+Conversation
+─────────────────
+id
+title
+userId
+sourceLink
+sourceType      → enum: youtube/video/audio/pdf
+status          → enum: processing/ready/failed
+createdAt
+updatedAt
+
+Message
+─────────────────
+id
+conversationId
+role            → enum: user/assistant
+content
+sourceReference → JSON (null for user messages)
+                  { startTime, endTime } for youtube/video/audio
+                  { pageNumber } for pdf
+createdAt
+
+UserSession
+─────────────────
+id
+userId
+refreshToken
+deviceInfo
+ipAddress
+createdAt
+lastUsedAt

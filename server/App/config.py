@@ -35,6 +35,9 @@ class Settings(BaseSettings):
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     JWT_REFRESH_TOKEN_EXPIRE_DAYS: int = 7
 
+    # WHISPER
+    WHISPER_MODE: str = "local"
+
     @property
     def get_database_url(self) -> str:
         if self.DATABASE_URL:
