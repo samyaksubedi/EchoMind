@@ -4,8 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 import logging
 
-from app.routes.auth_router import router as auth_router
-from app.routes.chat_router import router as chat_router
+from app.routes.auth_route import router as auth_router
+from app.routes.chat_route import router as chat_router
 from app.routes.conversations_router import router as conversations_router
 
 from app.databases.postgres_db import test_postgres_conn
