@@ -13,13 +13,15 @@ createdAt
 updatedAt
 
 Conversation
-─────────────────
+─────────────────in
 id
 title
 userId
-sourceLink
-sourceType      → enum: youtube/video/audio/pdf
-status          → enum: processing/ready/failed
+sourceLink        → cloudinary uploaded media public link 
+sourceType        → enum: youtube/video/audio/pdf
+status            → enum: processing/ready/failed
+tempSourcePath    → original uploaded file path (video/audio/pdf) OR youtube URL
+tempAudioPath     → extracted audio path (video/youtube only)
 createdAt
 updatedAt
 

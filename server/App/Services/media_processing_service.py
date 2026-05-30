@@ -7,7 +7,10 @@ from clients.ytdlp_client import download_youtube_audio
 from clients.ffmpeg_client import extract_audio_from_video
 
 
-def process_media(conversation_id, file_path, source_type):
+def process_media(conversation_id):
+    db = ""  # TODO  Create a db session and pass the same session to sub functions : )
+    file_path = ""  # TODO Extract From DB
+    source_type = ""  # TODO Extract From Database
     if source_type == "youtube":
         audio_path = download_youtube_audio(
             file_path
@@ -16,23 +19,23 @@ def process_media(conversation_id, file_path, source_type):
 
     elif source_type == "video":
         audio_path = extract_audio_from_video(file_path)  # extra step
-        _process_audio_pipeline(conversation_id, audio_path)
+        _process_audio_pipeline(conversation_id, audio_path, db)
 
     elif source_type == "audio":
-        _process_audio_pipeline(conversation_id, file_path)  # skip extraction
+        _process_audio_pipeline(conversation_id, file_path, db)  # skip extraction
 
     elif source_type == "pdf":
-        _process_pdf_pipeline(conversation_id, file_path)  # different pipeline
+        _process_pdf_pipeline(conversation_id, file_path, db)  # different pipeline
 
 
-def _process_audio_pipeline(conversation_id, audio_path):
+def _process_audio_pipeline(conversation_id, audio_path, db):
     # same for youtube/video/audio
     segments = transcribe(audio_path)  # whisper_client
     chunks = chunk_segments(segments)  # audio_utils
     embed_and_store(chunks, conversation_id)  # qdrant
 
 
-def _process_pdf_pipeline(conversation_id, file_path):
+def _process_pdf_pipeline(conversation_id, file_path, db):
     # different pipeline
     chunks = load_and_chunk_pdf(file_path=file_path)
     embed_and_store(chunks, conversation_id)  # qdrant

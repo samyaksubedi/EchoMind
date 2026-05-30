@@ -34,10 +34,10 @@ def test_postgres_conn() -> bool:
     try:
         with engine.connect() as conn:
             conn.execute(text("SELECT 1"))
-        logger.info("PostgreSQL connected ✅")
+        logger.info("PostgreSQL connected ")
         return True
     except SQLAlchemyError as e:
-        logger.error(f"PostgreSQL connection failed ❌: {e}")
+        logger.error(f"PostgreSQL connection failed : {e}")
         return False
 
 

@@ -12,10 +12,11 @@ from app.databases.postgres_db import test_postgres_conn
 from app.databases.redis_db import get_redis, close_redis
 from app.databases.qdrant_db import get_qdrant, close_qdrant
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(name)s - %(message)s",
-)
+from app.core.logging_config import setup_logging
+
+import app.models
+
+setup_logging(service="api")  # Setup logger once only for FASTAPI server's process
 
 logger = logging.getLogger(__name__)
 
@@ -31,28 +32,28 @@ async def lifespan(app: FastAPI):
     # Redis
     try:
         await get_redis()
-        logger.info("Redis connected ✅")
+        logger.info("Redis connected")
     except Exception as e:
-        logger.error(f"Redis connection failed ❌: {e}")
+        logger.error(f"Redis connection failed: {e}")
         sys.exit(1)
 
     # Qdrant
     try:
         await get_qdrant()
-        logger.info("Qdrant connected ✅")
+        logger.info("Qdrant connected")
     except Exception as e:
-        logger.error(f"Qdrant connection failed ❌: {e}")
+        logger.error(f"Qdrant connection failed: {e}")
         sys.exit(1)
 
-    logger.info("EchoMind server ready ✅")
+    logger.info("EchoMind server ready")
 
     yield
 
     logger.info("EchoMind server shutting down...")
     await close_redis()
-    logger.info("Redis disconnected ✅")
+    logger.info("Redis disconnected")
     await close_qdrant()
-    logger.info("Qdrant disconnected ✅")
+    logger.info("Qdrant disconnected")
 
 
 app = FastAPI(
